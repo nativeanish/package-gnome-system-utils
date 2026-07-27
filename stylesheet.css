@@ -1,0 +1,299 @@
+/* ======================================================= */
+/*  System Monitor Pro — Glass Effect Theme                */
+/* ======================================================= */
+
+/* ---------- panel button ---------- */
+
+.sysmon-panel-btn {
+    -natural-hpadding: 2px;
+    -minimum-hpadding: 1px;
+}
+
+/* ---------- top bar chips ---------- */
+
+.sysmon-chip {
+    spacing: 5px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.06);
+    transition-duration: 180ms;
+}
+
+.sysmon-chip:hover,
+.sysmon-chip:active {
+    background-color: rgba(255, 255, 255, 0.16);
+}
+
+.sysmon-chip-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+}
+
+.accent-cpu .sysmon-chip-dot  { background-color: #62a0ea; }
+.accent-ram .sysmon-chip-dot  { background-color: #57e389; }
+.accent-gpu .sysmon-chip-dot  { background-color: #dc8add; }
+.accent-disk .sysmon-chip-dot { background-color: #f8e45c; }
+.accent-sys .sysmon-chip-dot  { background-color: #ff7800; }
+.accent-net .sysmon-chip-dot  { background-color: #33d17a; }
+
+.sysmon-chip-tag {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.sysmon-chip-icon {
+    icon-size: 14px;
+    -st-icon-style: symbolic;
+    color: rgba(255, 255, 255, 0.78);
+    margin: 0 1px;
+}
+
+.accent-cpu .sysmon-chip-icon  { color: #8ec8ff; }
+.accent-ram .sysmon-chip-icon  { color: #7af0a5; }
+.accent-gpu .sysmon-chip-icon  { color: #e8a8f0; }
+.accent-disk .sysmon-chip-icon { color: #faf086; }
+.accent-sys .sysmon-chip-icon  { color: #ffad54; }
+.accent-net .sysmon-chip-icon  { color: #66e8a0; }
+
+.sysmon-chip-value {
+    font-family: "JetBrains Mono", "Source Code Pro", monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* ---------- popup shell (glass base) ---------- */
+
+.sysmon-menu {
+    padding: 0;
+    background-color: rgba(22, 24, 38, 0.72);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+}
+
+.sysmon-menu-item {
+    padding: 0;
+    margin: 0;
+}
+
+.sysmon-root {
+    width: 420px;
+    padding: 10px 12px 10px 12px;
+    spacing: 10px;
+}
+
+.sysmon-scroll {
+    max-height: 480px;
+}
+
+/* ---------- cards (glass panels) ---------- */
+
+.sysmon-card {
+    spacing: 10px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.10),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    border-top-width: 2px;
+    border-top-style: solid;
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Per-section accent top border */
+.accent-cpu .sysmon-card  { border-color: rgba(98, 160, 234, 0.7); }
+.accent-ram .sysmon-card  { border-color: rgba(87, 227, 137, 0.7); }
+.accent-gpu .sysmon-card  { border-color: rgba(220, 138, 221, 0.7); }
+.accent-disk .sysmon-card { border-color: rgba(248, 228, 92, 0.7); }
+.accent-sys .sysmon-card  { border-color: rgba(255, 120, 0, 0.7); }
+.accent-net .sysmon-card  { border-color: rgba(51, 209, 122, 0.7); }
+
+.sysmon-card-head {
+    spacing: 8px;
+}
+
+.sysmon-card-titles {
+    spacing: 2px;
+}
+
+.sysmon-card-title {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+}
+
+.sysmon-card-subtitle {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.sysmon-card-big {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 24px;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+/* Per-section accent big number */
+.accent-cpu .sysmon-card-big  { color: #8ec8ff; }
+.accent-ram .sysmon-card-big  { color: #7af0a5; }
+.accent-gpu .sysmon-card-big  { color: #e8a8f0; }
+.accent-disk .sysmon-card-big { color: #faf086; }
+.accent-sys .sysmon-card-big  { color: #ffad54; }
+.accent-net .sysmon-card-big  { color: #66e8a0; }
+
+.sysmon-card-body {
+    spacing: 7px;
+}
+
+.sysmon-subhead {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.42);
+    padding-top: 6px;
+}
+
+/* ---------- stat cells ---------- */
+
+.sysmon-stats {
+    spacing: 6px;
+}
+
+.sysmon-stat {
+    spacing: 2px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    background-color: rgba(0, 0, 0, 0.22);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.sysmon-stat-name {
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.sysmon-stat-value {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* ---------- rows and bars ---------- */
+
+.sysmon-list {
+    spacing: 5px;
+}
+
+.sysmon-row {
+    spacing: 8px;
+}
+
+.sysmon-row-name {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.72);
+    width: 96px;
+}
+
+.sysmon-row-value {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: #ffffff;
+    width: 132px;
+    text-align: right;
+}
+
+.sysmon-bar {
+    height: 7px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.10);
+}
+
+.sysmon-bar-fill {
+    height: 7px;
+    border-radius: 4px;
+    background-color: #62a0ea;
+    transition-duration: 300ms;
+}
+
+.sysmon-bar-fill.is-ok   { background-color: #57e389; }
+.sysmon-bar-fill.is-warn { background-color: #f8e45c; }
+.sysmon-bar-fill.is-crit { background-color: #f66151; }
+
+/* ---------- per-core grid ---------- */
+
+.sysmon-columns {
+    spacing: 12px;
+}
+
+.sysmon-col {
+    spacing: 5px;
+}
+
+.sysmon-core {
+    spacing: 6px;
+}
+
+.sysmon-core-name {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.45);
+    width: 24px;
+}
+
+.sysmon-bar-core {
+    height: 6px;
+}
+
+.sysmon-core-pct {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    color: #ffffff;
+    width: 30px;
+    text-align: right;
+}
+
+.sysmon-core-extra {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.5);
+    width: 62px;
+    text-align: right;
+}
+
+/* ---------- key/value rows ---------- */
+
+.sysmon-kv {
+    spacing: 8px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.18);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.sysmon-kv-key {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.sysmon-kv-value {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* ---------- footer ---------- */
+
+.sysmon-foot-text {
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.38);
+    padding-top: 2px;
+}

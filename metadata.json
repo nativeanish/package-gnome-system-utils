@@ -1,0 +1,8 @@
+{
+  "uuid": "system-monitor-pro@anish",
+  "name": "System Monitor Pro",
+  "description": "Beautiful top bar system monitor: CPU (per-core usage, freq, temp), RAM (breakdown, DIMM temperatures, top processes), GPU, disks and network. Hover a chip to open its detail panel.",
+  "shell-version": ["50"],
+  "version": 1,
+  "settings-schema": "org.gnome.shell.extensions.system-monitor-pro"
+}

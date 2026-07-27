@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.system-monitor-pro"
+          path="/org/gnome/shell/extensions/system-monitor-pro/">
+
+    <!-- Chip visibility -->
+    <key name="show-cpu" type="b">
+      <default>true</default>
+      <summary>Show CPU chip</summary>
+      <description>Show the CPU monitor chip in the top bar.</description>
+    </key>
+
+    <key name="show-ram" type="b">
+      <default>true</default>
+      <summary>Show RAM chip</summary>
+      <description>Show the RAM monitor chip in the top bar.</description>
+    </key>
+
+    <key name="show-gpu" type="b">
+      <default>true</default>
+      <summary>Show GPU chip</summary>
+      <description>Show the GPU monitor chip in the top bar.</description>
+    </key>
+
+    <key name="show-disk" type="b">
+      <default>true</default>
+      <summary>Show Disk chip</summary>
+      <description>Show the Disk/Storage monitor chip in the top bar.</description>
+    </key>
+
+    <key name="show-sys" type="b">
+      <default>true</default>
+      <summary>Show Thermals chip</summary>
+      <description>Show the system thermals chip in the top bar.</description>
+    </key>
+
+    <key name="show-net" type="b">
+      <default>true</default>
+      <summary>Show Network chip</summary>
+      <description>Show the network monitor chip in the top bar.</description>
+    </key>
+
+    <!-- Appearance -->
+    <key name="use-icons" type="b">
+      <default>true</default>
+      <summary>Use icons instead of text labels</summary>
+      <description>When enabled, chips show symbolic icons instead of text abbreviations (CPU, RAM, etc.).</description>
+    </key>
+
+    <key name="blur-sigma" type="i">
+      <default>30</default>
+      <range min="0" max="60"/>
+      <summary>Glass blur strength</summary>
+      <description>Gaussian blur radius for the glass effect on dropdown panels. 0 disables blur.</description>
+    </key>
+
+    <key name="panel-opacity" type="i">
+      <default>72</default>
+      <range min="10" max="100"/>
+      <summary>Dropdown opacity</summary>
+      <description>Background opacity of dropdown panels. Lower values are more transparent/glassy.</description>
+    </key>
+
+    <key name="update-interval" type="i">
+      <default>2000</default>
+      <range min="500" max="10000"/>
+      <summary>Update interval (ms)</summary>
+      <description>How often to refresh the panel indicators, in milliseconds.</description>
+    </key>
+
+    <key name="panel-position" type="s">
+      <default>'right'</default>
+      <summary>Panel position</summary>
+      <description>Which panel box to place the indicator in: left, center, or right.</description>
+    </key>
+
+  </schema>
+</schemalist>
