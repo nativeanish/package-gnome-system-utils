@@ -142,6 +142,39 @@ function scanSensors() {
     return all;
 }
 
+function scanFans() {
+    const all = [];
+    for (const entry of listDir(HWMON)) {
+        const base = `${HWMON}/${entry}`;
+        const chip = readTrim(`${base}/name`);
+        if (!chip)
+            continue;
+        for (const f of listDir(base)) {
+            const m = /^fan(\d+)_input$/.exec(f);
+            if (!m)
+                continue;
+            const idx = m[1];
+            all.push({
+                chip,
+                base,
+                index: parseInt(idx, 10),
+                label: readTrim(`${base}/fan${idx}_label`) || `Fan ${idx}`,
+                path: `${base}/${f}`,
+                maxPath: GLib.file_test(`${base}/fan${idx}_max`, GLib.FileTest.EXISTS)
+                    ? `${base}/fan${idx}_max` : null,
+            });
+        }
+    }
+    return all;
+}
+
+function fanRpm(fan) {
+    if (!fan)
+        return null;
+    const v = readInt(fan.path);
+    return v === null ? null : v;
+}
+
 function temp(sensor) {
     if (!sensor)
         return null;
@@ -149,13 +182,17 @@ function temp(sensor) {
     return v === null ? null : v / 1000;
 }
 
+function chipMatches(chip, candidates) {
+    return candidates.some(c => chip === c || chip.startsWith(`${c}_`));
+}
+
 function findSensor(sensors, chips, labelRe) {
     for (const s of sensors) {
-        if (chips.includes(s.chip) && labelRe && labelRe.test(s.label))
+        if (chipMatches(s.chip, chips) && labelRe && labelRe.test(s.label))
             return s;
     }
     for (const s of sensors) {
-        if (chips.includes(s.chip))
+        if (chipMatches(s.chip, chips))
             return s;
     }
     return null;
@@ -302,6 +339,7 @@ class DataStore {
         this._topProcsTime = 0;            // monotonic ms when last read
 
         this.sensors = scanSensors();
+        this.fans = scanFans();
         this.topology = cpuTopology();
         this.model = cpuModel();
         this._resolveSensors();
@@ -321,7 +359,7 @@ class DataStore {
         this.dimmSensors = s.filter(x => ['spd5118', 'jc42', 'ee1004'].includes(x.chip));
         this._sysSensor = findSensor(s,
             ['acpitz', 'pch_skylake', 'pch_cannonlake', 'nct6798', 'nct6797', 'nct6793',
-             'nct6687', 'it8686', 'it8792', 'thinkpad', 'asus', 'asusec'], /SYSTIN|Systin|temp1/i);
+             'nct6687', 'it8686', 'it8792', 'thinkpad', 'asus', 'asusec', 'acer'], /SYSTIN|Systin|temp1/i);
         this._allDiskTemps = s.filter(x => ['nvme', 'drivetemp'].includes(x.chip));
     }
 
@@ -329,6 +367,7 @@ class DataStore {
         this._tick++;
         if (this._tick % SENSOR_RESCAN_TICKS === 0) {
             this.sensors = scanSensors();
+            this.fans = scanFans();
             this._resolveSensors();
         }
 
@@ -975,9 +1014,13 @@ class SysMonChip extends PanelMenu.Button {
     }
 
     _buildThermalSection() {
-        this._card = sectionCard('Thermals', 'all detected sensors');
+        this._card = sectionCard('Thermals', 'sensors & fans');
         this._thermBox = vbox('sysmon-list');
         this._card.body.add_child(this._thermBox);
+
+        this._card.body.add_child(label('Fan speeds', 'sysmon-subhead'));
+        this._fanBox = vbox('sysmon-list');
+        this._card.body.add_child(this._fanBox);
     }
 
     _buildNetSection() {
@@ -1009,9 +1052,12 @@ class SysMonChip extends PanelMenu.Button {
                     : '--';
                 break;
             }
-            case 'sys':
-                this._val.text = num(d.sysTemp, 0, '°');
+            case 'sys': {
+                const primaryFan = d.fans.length ? fanRpm(d.fans[0]) : null;
+                const fanTxt = primaryFan !== null ? ` ${primaryFan}ʀ` : '';
+                this._val.text = `${num(d.sysTemp, 0, '°')}${fanTxt}`;
                 break;
+            }
             case 'net':
                 this._val.text = d.net ? `↓${fmtRate(d.net.down)} ↑${fmtRate(d.net.up)}` : '--';
                 break;
@@ -1190,6 +1236,25 @@ class SysMonChip extends PanelMenu.Button {
             row.add_child(bar);
             row.add_child(label(num(value, 1, ' °C'), 'sysmon-row-value'));
             this._thermBox.add_child(row);
+        }
+
+        // Fan speeds
+        this._fanBox.destroy_all_children();
+        if (!d.fans.length) {
+            const row = hbox('sysmon-kv');
+            row.add_child(label('No fan sensors detected', 'sysmon-kv-key'));
+            this._fanBox.add_child(row);
+        }
+        for (const f of d.fans) {
+            const rpm = fanRpm(f);
+            const row = hbox('sysmon-row');
+            row.add_child(label(`${f.chip}/${f.label}`.slice(0, 22), 'sysmon-row-name'));
+            const bar = new Bar();
+            const maxRpm = f.maxPath ? (readInt(f.maxPath) || 5000) : 5000;
+            bar.setValue((rpm || 0) / maxRpm);
+            row.add_child(bar);
+            row.add_child(label(rpm !== null ? `${rpm} RPM` : '--', 'sysmon-row-value sysmon-fan-value'));
+            this._fanBox.add_child(row);
         }
     }
 

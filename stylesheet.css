@@ -297,3 +297,12 @@
     color: rgba(255, 255, 255, 0.38);
     padding-top: 2px;
 }
+
+/* ---------- fan speed rows ---------- */
+
+.sysmon-fan-value {
+    font-family: "JetBrains Mono", "Source Code Pro", monospace;
+    font-size: 10px;
+    font-weight: 600;
+    color: #ffad54;
+}
